@@ -1,0 +1,39 @@
+{
+  "apiVersion": "1",
+  "timestampUtc": "2026-08-26T12:00:00Z",
+  "overall": "healthy",
+  "gateway": {
+    "running": true,
+    "state": "Ready",
+    "version": "0.2.10",
+    "sipListening": true,
+    "registeredPeers": 2,
+    "lastError": null
+  },
+  "modem": {
+    "detected": true,
+    "simReady": true,
+    "cellularRegistered": true,
+    "signalQuality": 21,
+    "operatorName": "Demo operator"
+  },
+  "network": {
+    "internetAvailable": true,
+    "activeRoute": "UsbTethering",
+    "tailscaleAvailable": true,
+    "tailscaleAddress": "100.64.0.12",
+    "lastLightTestRttMs": 284
+  },
+  "system": {
+    "machineName": "POINT-B",
+    "osDescription": "Microsoft Windows",
+    "uptimeSeconds": 273600,
+    "systemDriveFreeBytes": 53687091200
+  },
+  "call": {
+    "state": "Idle",
+    "connected": false,
+    "durationSeconds": 0,
+    "codec": null
+  }
+}

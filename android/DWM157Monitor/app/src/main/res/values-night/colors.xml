@@ -1,0 +1,9 @@
+<resources>
+    <color name="monitor_background">#0C1624</color>
+    <color name="monitor_surface">#152235</color>
+    <color name="monitor_ink">#F0F5FC</color>
+    <color name="monitor_muted">#B4C2D4</color>
+    <color name="monitor_border">#41546D</color>
+    <color name="monitor_accent">#91DCCC</color>
+    <color name="monitor_ripple">#2891DCCC</color>
+</resources>

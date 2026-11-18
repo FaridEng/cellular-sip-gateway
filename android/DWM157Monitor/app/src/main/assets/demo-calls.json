@@ -1,0 +1,8 @@
+{
+  "timestampUtc": "2026-08-27T12:00:00Z",
+  "sourceAvailable": true,
+  "calls": [
+    {"direction":"Outgoing","remoteNumber":"Test number","sipPeer":"100.64.0.14:5060","status":"Completed","requestTimestampUtc":"2026-08-27T11:50:00Z","connectTimestampUtc":"2026-08-27T11:50:08Z","endTimestampUtc":"2026-08-27T11:51:10Z","durationSeconds":62,"endReason":"normal hangup","codec":"OPUS"},
+    {"direction":"Incoming","remoteNumber":null,"sipPeer":null,"status":"Unanswered","requestTimestampUtc":"2026-08-27T10:20:00Z","connectTimestampUtc":null,"endTimestampUtc":"2026-08-27T10:20:25Z","durationSeconds":null,"endReason":"no SIP client answered","codec":null}
+  ]
+}

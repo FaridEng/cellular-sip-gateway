@@ -1,0 +1,165 @@
+openapi: 3.0.3
+info:
+  title: DWM157 Monitoring API
+  version: 0.5.0
+servers:
+  - url: http://127.0.0.1:5088
+paths:
+  /api/v1/observer:
+    servers: [{ url: 'http://127.0.0.1:5090' }]
+    get:
+      security: [{ ObserverToken: [] }]
+      responses:
+        '200': { description: Independent observer viewpoint, incident, version inventory, explicit push configuration/delivery status, and recent events. Cached Gateway data retains its own timestamp. }
+  /api/v1/push/register:
+    servers: [{ url: 'http://127.0.0.1:5090' }]
+    post:
+      security: [{ ObserverToken: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [token]
+              properties:
+                token: { type: string, maxLength: 4096 }
+      responses:
+        '200': { description: Registration stored privately; does not prove FCM configuration or actual notification delivery. }
+  /api/v1/push/test:
+    servers: [{ url: 'http://127.0.0.1:5090' }]
+    post:
+      security: [{ ObserverToken: [] }]
+      responses:
+        '200': { description: Test accepted by FCM provider; confirm actual Android delivery separately. }
+        '409': { description: Push is not configured, no installation registered, or provider failed. }
+  /api/v1/versions/report:
+    servers: [{ url: 'http://127.0.0.1:5090' }]
+    post:
+      security: [{ ObserverToken: [] }, { ReporterToken: [] }]
+      description: Peer-scoped installed version report. Windows reporters require the separate reporter credential and allowlist. Android package reports cannot assert a running daemon version.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, installedVersion]
+              properties:
+                name: { type: string, maxLength: 100 }
+                installedVersion: { type: string, maxLength: 150 }
+                runningVersion: { type: string, nullable: true, maxLength: 150 }
+      responses:
+        '200': { description: Version observation recorded with server timestamp and source peer identity. }
+  /api/v1/health:
+    get:
+      security: [{ MonitorToken: [] }]
+      responses:
+        '200': { description: Monitoring host is healthy }
+  /api/v1/summary:
+    get:
+      security: [{ MonitorToken: [] }]
+      responses:
+        '200':
+          description: Aggregated Gateway PC status
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Summary' }
+  /api/v1/gateway:
+    get:
+      security: [{ MonitorToken: [] }]
+      responses:
+        '200': { description: Gateway status }
+  /api/v1/modem:
+    get:
+      security: [{ MonitorToken: [] }]
+      responses:
+        '200': { description: DWM-157 and SIM status }
+  /api/v1/network:
+    get:
+      security: [{ MonitorToken: [] }]
+      responses:
+        '200': { description: Network, route, peer-path, Internet-quality, and A07 USB/ADB status }
+  /api/v1/system:
+    get:
+      security: [{ MonitorToken: [] }]
+      responses:
+        '200': { description: Windows system status }
+  /api/v1/call:
+    get:
+      security: [{ MonitorToken: [] }]
+      responses:
+        '200': { description: Current call status }
+  /api/v1/calls:
+    get:
+      security: [{ MonitorToken: [] }]
+      parameters:
+        - in: query
+          name: limit
+          schema: { type: integer, minimum: 1, maximum: 10, default: 10 }
+      responses:
+        '200': { description: Up to the ten most recent persistent call-history records including compact media statistics }
+  /api/v1/history:
+    get:
+      security: [{ MonitorToken: [] }]
+      parameters:
+        - in: query
+          name: range
+          schema: { type: string, enum: [1h, 24h, 7d, 30d], default: 24h }
+        - in: query
+          name: maxPoints
+          schema: { type: integer, minimum: 10, maximum: 2000, default: 720 }
+      responses:
+        '200': { description: Downsampled persistent monitoring history }
+  /api/v1/history/export:
+    get:
+      security: [{ MonitorToken: [] }]
+      responses:
+        '200': { description: Persistent monitoring history as CSV }
+  /api/v1/diagnostics:
+    get:
+      security: [{ MonitorToken: [] }]
+      responses:
+        '200': { description: Sanitized summary, recent calls, and one-hour history bundle }
+  /api/v1/network/light-test:
+    post:
+      security: [{ MonitorToken: [] }]
+      responses:
+        '200': { description: Bounded TCP Internet reachability test }
+components:
+  securitySchemes:
+    ObserverToken:
+      type: apiKey
+      in: header
+      name: X-Monitor-Token
+      description: Independent NUC observer token; not the Gateway PC monitoring token.
+    ReporterToken:
+      type: apiKey
+      in: header
+      name: X-Reporter-Token
+    MonitorToken:
+      type: apiKey
+      in: header
+      name: X-Monitor-Token
+  schemas:
+    Summary:
+      type: object
+      required: [apiVersion, timestampUtc, overall, gateway, modem, network, system, call, readiness]
+      properties:
+        apiVersion: { type: string, example: '1' }
+        timestampUtc: { type: string, format: date-time }
+        overall: { type: string, enum: [healthy, warning, critical] }
+        gateway: { type: object, additionalProperties: true }
+        modem: { type: object, additionalProperties: true }
+        network: { type: object, additionalProperties: true }
+        system: { type: object, additionalProperties: true }
+        call: { type: object, additionalProperties: true }
+        readiness: { type: object, additionalProperties: true }
+        tailscaleVersion:
+          type: object
+          nullable: true
+          properties:
+            installedVersion: { type: string, nullable: true }
+            runningVersion: { type: string, nullable: true }
+            observedAtUtc: { type: string, format: date-time }
+            error: { type: string, nullable: true }

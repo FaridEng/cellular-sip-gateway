@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Version>0.5.0</Version>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DWM157Gateway.Monitoring\DWM157Gateway.Monitoring.csproj" />
+  </ItemGroup>
+</Project>

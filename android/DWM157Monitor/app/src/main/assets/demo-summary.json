@@ -1,0 +1,10 @@
+{
+  "apiVersion": "1",
+  "timestampUtc": "2026-08-26T12:00:00Z",
+  "overall": "healthy",
+  "gateway": {"running": true, "state": "Ready", "version": "0.2.10", "sipListening": true, "registeredPeers": 2, "snapshotAvailable": true, "snapshotStale": false},
+  "modem": {"detected": true, "simReady": true, "cellularRegistered": true, "signalQuality": 21, "operatorName": "Demo operator"},
+  "network": {"networkAvailable": true, "activeRoute": "UsbTethering", "tailscaleAvailable": true, "tailscaleAddress": "100.64.0.12", "lastLightTest": {"success": true, "rttMilliseconds": 284.0}, "quality": {"s25ToGatewayPc": {"success": true, "rttMilliseconds": 369.0, "path": "DERP", "derpRegion": "fra"}, "internet": {"success": true, "rttMilliseconds": 84.0}, "currentRoute": "UsbTethering", "previousRoute": "LAN", "routeChangedAtUtc": "2026-08-26T11:42:00Z", "a07": {"adbAvailable": true, "connected": true, "state": "Online"}}},
+  "system": {"machineName": "Gateway PC", "osDescription": "Microsoft Windows", "uptimeSeconds": 273600, "systemDriveFreeBytes": 53687091200, "processorCount": 4},
+  "call": {"state": "Idle", "connected": false, "durationSeconds": 0, "codec": null, "rtpLossPercent": null, "jitterMilliseconds": null, "rttMilliseconds": null}
+}

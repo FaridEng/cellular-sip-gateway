@@ -1,0 +1,26 @@
+{
+  "Observer": {
+    "Name": "NUC observer",
+    "BindAddress": "100.64.0.13",
+    "Port": 5090,
+    "AllowedRemoteAddresses": ["100.64.0.14"],
+    "ApiToken": "REPLACE_WITH_INDEPENDENT_RANDOM_OBSERVER_TOKEN",
+    "GatewayUrl": "http://100.64.0.12:5088",
+    "GatewayApiToken": "REPLACE_WITH_EXISTING_GATEWAY_MONITOR_TOKEN",
+    "DataDirectory": "C:\\DWM157Observer\\data",
+    "ProbeIntervalSeconds": 15,
+    "FailureThreshold": 3,
+    "FailureDurationSeconds": 45,
+    "RecoveryThreshold": 2,
+    "MinimumWindowsVersion": null,
+    "TailscaleApiCredentialPath": "",
+    "Tailnet": "-",
+    "TrackedAddresses": ["100.64.0.12", "100.64.0.13", "100.64.0.16", "100.64.0.14"],
+    "DeviceTracks": {"100.64.0.12": "stable", "100.64.0.13": "stable", "100.64.0.16": "stable"},
+    "WindowsReporterToken": "",
+    "ReporterAddresses": ["100.64.0.16"],
+    "FirebaseProjectId": "",
+    "FirebaseServiceAccountPath": "",
+    "MaintenanceUntilUtc": null
+  }
+}

@@ -1,0 +1,50 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.dwm157.monitor'
+    compileSdk 36
+
+    defaultConfig {
+        applicationId 'com.dwm157.monitor'
+        minSdk 26
+        targetSdk 36
+        versionCode 6
+        versionName '0.6.0'
+
+        def firebaseFile = file('google-services.json')
+        def firebaseReady = false
+        if (firebaseFile.exists()) {
+            def config = new groovy.json.JsonSlurper().parse(firebaseFile)
+            def client = config.client.find { it.client_info.android_client_info.package_name == 'com.dwm157.monitor' }
+            if (client == null) throw new GradleException('Firebase configuration has no com.dwm157.monitor Android client')
+            resValue 'string', 'google_app_id', client.client_info.mobilesdk_app_id
+            resValue 'string', 'gcm_defaultSenderId', config.project_info.project_number.toString()
+            resValue 'string', 'google_api_key', client.api_key[0].current_key
+            resValue 'string', 'project_id', config.project_info.project_id
+            firebaseReady = true
+        }
+        buildConfigField 'boolean', 'FIREBASE_CONFIGURED', firebaseReady.toString()
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures { buildConfig true }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13.2'
+    implementation 'com.google.firebase:firebase-messaging:26.0.1'
+    implementation 'androidx.work:work-runtime:2.10.1'
+}

@@ -1,0 +1,92 @@
+{
+  "version": "0.2.11",
+  "sip": {
+    "bindAddress": "100.64.0.12",
+    "sipPort": 5060,
+    "rtpPortStart": 40000,
+    "rtpPortEnd": 40020,
+    "username": "dwm157",
+    "password": "GENERATE_ON_DESTINATION_CONFIG_ONLY",
+    "allowedTailscaleIPs": [ "100.64.0.16" ],
+    "preferredCodec": "OPUS",
+    "enabledCodecs": [ "OPUS", "PCMU", "PCMA" ],
+    "forcePreferredCodec": false,
+    "opusBitrateBps": 16000,
+    "opusFec": true,
+    "opusExpectedPacketLossPercent": 10,
+    "opusDtx": false,
+    "opusComplexity": 10,
+    "opusVbr": true,
+    "authenticatedPeerContactLifetimeSeconds": 86400,
+    "contactCacheFile": "sip-contacts.json"
+  },
+  "modem": {
+    "controlFriendlyName": "D-Link HSPADatacard Control Port",
+    "serviceFriendlyName": "D-Link HSPADatacard Service Port",
+    "controlPortOverride": null,
+    "servicePortOverride": null,
+    "baudRate": 115200,
+    "autoCloseConnectionManager": false
+  },
+  "dialPolicy": {
+    "allowUnlistedNumbers": false,
+    "testNumber": "123",
+    "allowedDialNumbers": [ "123" ],
+    "blockedNumbers": [ "911", "112", "999", "000" ],
+    "dialPlan": {
+      "removePrefix": null,
+      "addPrefix": null
+    }
+  },
+  "incomingCalls": {
+    "enabled": true,
+    "pollIntervalMilliseconds": 1500,
+    "callerIdWaitMilliseconds": 1000,
+    "sipContactWaitSeconds": 20,
+    "sipRingTimeoutSeconds": 35,
+    "cellularAnswerTimeoutSeconds": 15
+  },
+  "audio": {
+    "sampleRateHz": 8000,
+    "channels": 1,
+    "bitsPerSample": 16,
+    "frameMilliseconds": 20,
+    "modemToRtpGainDb": 6.0,
+    "enableAudioCapture": false,
+    "modemToRtpBuffer": {
+      "enabled": true,
+      "minBufferMilliseconds": 200,
+      "targetBufferMilliseconds": 300,
+      "maxBufferMilliseconds": 600,
+      "stableFramesBeforeShrink": 250
+    },
+    "jitterBuffer": {
+      "enabled": true,
+      "minBufferMilliseconds": 80,
+      "targetBufferMilliseconds": 120,
+      "maxBufferMilliseconds": 300,
+      "stableFramesBeforeShrink": 100
+    },
+    "pacing": {
+      "preventBurstCatchUp": true,
+      "minimumPacketSpacingMilliseconds": 15,
+      "precisionWaitMilliseconds": 2,
+      "requestOneMillisecondTimerResolution": true,
+      "useHighResolutionWaitableTimer": false,
+      "gapWarningMilliseconds": 25,
+      "burstWarningMilliseconds": 15,
+      "legacyMaximumCatchUpFrames": 10
+    }
+  },
+  "recovery": {
+    "autoRecovery": true,
+    "networkDisruptionTimeout": "00:00:10",
+    "reconnectInterval": "00:00:02",
+    "maxReconnectDuration": "00:02:00"
+  },
+  "logging": {
+    "level": "Information",
+    "callHistoryFile": "call-history.json",
+    "maxCallHistoryRecords": 500
+  }
+}
